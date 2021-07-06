@@ -33,4 +33,21 @@ journals.post('/', (req, res) => {
     })
 });
 
+/*
+curl -X PUT \
+    -H 'Origin: http://localhost:3000' \
+    -H "Access-Control-Request-Headers: X-Requested-With" \
+    -H "Content-Type: application/json" \
+    -d '{"title":"Yet another day", "body":"in paradise", "userID":"123"}' \
+    'http://localhost:3000/journals/60e4b6d9ef0f2d6773a706e5'
+*/
+journals.put('/:id', (req, res) => {
+    Journal.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedJournal) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+        }
+        res.status(200).json(updatedJournal);
+    })
+});
+
 module.exports = journals;

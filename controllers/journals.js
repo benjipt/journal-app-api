@@ -50,4 +50,19 @@ journals.put('/:id', (req, res) => {
     })
 });
 
+/*
+curl -X DELETE \
+    'http://localhost:3000/journals/60e4b6d9ef0f2d6773a706e5'
+*/
+journals.delete('/:id', (req, res) => {
+    Journal.findByIdAndRemove(req.params.id, (err, deletedJournal) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+        }
+        res.status(200).json({
+            'deleted_journal': deletedJournal
+        });
+    })
+});
+
 module.exports = journals;

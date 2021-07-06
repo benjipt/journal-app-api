@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const bcrypt = require('bcryptjs');
@@ -9,7 +10,7 @@ require('dotenv').config();
 // App configuration
 const app = express();
 const PORT = process.env.PORT || 3000;
-const MONGODBNAME = process.env.MONGODBNAME;
+const MONGODB_URI = process.env.MONGODB_URI;
 
 // Express Middleware
 app.use(express.urlencoded({ extended: true }));
@@ -19,11 +20,8 @@ app.use(session({
     saveUninitialized: false
 }));
 
-// External Middleware
-app.use(methodOverride('_method'));
-
 // Makes the database
-mongoose.connect(`mongodb://localhost:27017/${MONGODBNAME}`, {
+mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false
@@ -31,6 +29,22 @@ mongoose.connect(`mongodb://localhost:27017/${MONGODBNAME}`, {
 mongoose.connection.once('open', () => {
     console.log('connected to mongo');
 });
+
+const whitelist = ['http://localhost:3000', 'http://localhost:3000/journals'];
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
+
+app.use(cors(corsOptions));
+
+// External Middleware
+app.use(methodOverride('_method'));
 
 // Custom Middleware
 app.use((req, res, next) => {

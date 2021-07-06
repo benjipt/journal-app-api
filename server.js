@@ -19,6 +19,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+app.use(express.json());
 
 // Makes the database
 mongoose.connect(MONGODB_URI, {

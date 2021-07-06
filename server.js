@@ -57,6 +57,8 @@ app.use((req, res, next) => {
 // Controllers
 const journalsController = require('./controllers/journals.js');
 app.use('/journals', journalsController);
+const usersController = require('./controllers/users.js');
+app.use('/users', usersController);
 
 app.listen(PORT, () => {
     console.log(`Server is running on PORT: ${PORT}`);

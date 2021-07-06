@@ -24,7 +24,6 @@ curl -X POST \
     'http://localhost:3000/journals'
 */
 journals.post('/', (req, res) => {
-    console.log(`req.body: ${req.body}`);
     Journal.create(req.body, (err, createdJournal) => {
         if (err) {
             res.status(400).json({ error: err.message });

@@ -32,6 +32,7 @@ journals.post('/', (req, res) => {
     })
 });
 
+// UPDATE ROUTE
 /*
 curl -X PUT \
     -H 'Origin: http://localhost:3000' \
@@ -49,6 +50,7 @@ journals.put('/:id', (req, res) => {
     })
 });
 
+// DELETE ROUTE
 /*
 curl -X DELETE \
     'http://localhost:3000/journals/60e4b6d9ef0f2d6773a706e5'

@@ -5,8 +5,15 @@ const mongoose = require('mongoose');
 // import models
 const User = require('../models/users');
 
+// INDEX ROUTE
+// curl 'http://localhost:3000/users'
 users.get('/', (req, res) => {
-    res.send('connected to users');
+    User.find({}, (err, foundJournals) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+        }
+        res.status(200).json(foundUsers);
+    })
 });
 
 // CREATE ROUTE
@@ -24,5 +31,24 @@ users.post('/', (req, res) => {
         res.status(200).json(createdUser);
     })
 });
+
+// UPDATE ROUTE
+/*
+curl -X PUT \
+    -H 'Origin: http://localhost:3000' \
+    -H "Access-Control-Request-Headers: X-Requested-With" \
+    -H "Content-Type: application/json" \
+    -d '{"userName":"testUser", "userPassword":"p014ca0xxsdtvpf033cak23rkh"}' \
+    'http://localhost:3000/users/60e4c61d2b0fa27594204815'
+*/
+users.put('/:id', (req, res) => {
+    User.findByIdAndUpdate(req.params.id, req.body, { new: true }, (err, updatedUser) => {
+        if (err) {
+            res.status(400).json({ error: err.message });
+        }
+        res.status(200).json(updatedUser);
+    })
+});
+
 
 module.exports = users;

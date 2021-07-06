@@ -1,5 +1,5 @@
 const express = require('express');
-const router = express.Router();
+const journals = express.Router();
 const mongoose = require('mongoose');
 
 // import models
@@ -19,3 +19,4 @@ journals.get('/', (req, res) => {
 //     })
 // });
 
+module.exports = journals;

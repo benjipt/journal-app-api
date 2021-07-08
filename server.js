@@ -31,19 +31,19 @@ mongoose.connection.once('open', () => {
     console.log('connected to mongo');
 });
 
-// const whitelist = [];
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//         console.log(origin);
-//         if (whitelist.indexOf(origin) !== -1) {
-//             callback(null, true)
-//         } else {
-//             callback(new Error('Not allowed by CORS'))
-//         }
-//     }
-// }
+const whitelist = ['http://localhost:3000', 'http://localhost:3000/journals'];
+const corsOptions = {
+    origin: function (origin, callback) {
+        console.log(origin);
+        if (whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error('Not allowed by CORS'))
+        }
+    }
+}
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // External Middleware
 app.use(methodOverride('_method'));

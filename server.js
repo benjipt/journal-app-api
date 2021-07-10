@@ -31,7 +31,7 @@ mongoose.connection.once('open', () => {
     console.log('connected to mongo');
 });
 
-const whitelist = ['http://localhost:3000', 'http://localhost:3000/journals'];
+const whitelist = ['http://localhost:3000', 'http://localhost:3000/journals', 'https://journals-app-frontend.herokuapp.com/'];
 const corsOptions = {
     origin: function (origin, callback) {
         console.log(origin);

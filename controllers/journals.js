@@ -7,8 +7,10 @@ const Journal = require('../models/journals');
 
 // INDEX ROUTE
 // curl 'http://localhost:3000/journals'
-journals.get('/', (req, res) => {
-    Journal.find({}, (err, foundJournals) => {
+journals.get('/:userID', (req, res) => {
+    Journal.find(
+        { userID: req.params.userID },
+        (err, foundJournals) => {
         if (err) {
             res.status(400).json({ error: err.message });
         }
